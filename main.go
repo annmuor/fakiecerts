@@ -25,7 +25,10 @@ func main() {
 	certOut := flag.String("co", ".", "New certificate output dir")
 	keyBits := flag.Uint("kb", 2048, "Key bits if generating new key")
 	flag.Parse()
-	if !(*keyBits < 128 && (*keyBits&(*keyBits-1) == 0)) {
+  if len(flag.Args()) == 0 {
+    flag.Usage()
+  }
+	if !(*keyBits > 128 && (*keyBits&(*keyBits-1) == 0)) {
 		die("KeyBits must power of 2 & >= 128")
 	}
 	if e := os.Mkdir(*keyOut, 0700); e != nil {
